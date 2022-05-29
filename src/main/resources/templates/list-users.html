@@ -1,0 +1,56 @@
+
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <!--bootstrap styling-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+          crossorigin="anonymous">
+    <!--datatables jquery link-->
+    <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Demo</title>
+</head>
+<body>
+<div class="container">
+    <h3 id="user-list-label">List of Users</h3>
+    <hr/>
+    <a th:href="@{/register}" class="btn btn-primary mb-2">Register New User</a>
+    <table class="table table-bordered table-striped" id="userTable">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--this is like an enhanced java for loop, for(Object o : collectionOfObjectsName),
+        user is the named variable to represent each object in user_list,
+         which is defined in the controller class ModelAndView Object creation-->
+        <tr th:each="user: ${user_list}">
+            <td th:text="${user.firstName}" />
+            <td th:text="${user.lastName}" />
+            <td th:text="${user.email}" />
+            <td th:text="${user.password}" />
+            <td>
+                <a th:href="@{/editProfile(userId=${user.id})}" class="btn btn-info">Update</a>
+                <a th:href="@{/deleteProfile(userId=${user.id})}" class="btn btn-danger">Delete Profile</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
+    <!--js script to create datatable from userTable element, to implement pagination and searching-->
+    <script>
+        $(document).ready(function() {
+            $("#userTable").DataTable();
+        })
+    </script>
+</div>
+</body>
+</html>
